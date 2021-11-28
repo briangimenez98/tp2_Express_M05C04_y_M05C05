@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('partials/head', {title: 'Inicio'}) %>
+<body>
+	<!-- Header -->
+	<%- include('partials/headerNavbar') %>
+	<!-- /Header -->
+	
+	<!-- Banner -->
+	<div class="banner"></div>
+	<!-- /Banner -->
+
+	<!-- ultima visita -->
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Basado en tu última visita</h2>
+			</div>
+			<!-- Show the "visited" products -->
+			<div class="col-12 col-sm-6 col-lg-3">
+				<% for(let i = 0; i < productInSale.length; i++ ) { %>
+					<section class="product-box">
+						<a href="/products/detail/<%= productInSale[i].id %>">
+							<figure class="product-box_image">
+								<img src="/images/products/<%= productInSale[i].image %>" alt="imagen de producto">
+							</figure>
+							<article class="product-box_data">
+								<% if (productInSale[i].discount>0) { %>
+									<h2>$<%= finalPrice(productInSale[i].price, productInSale[i].discount) %></h2>
+									<span><%= productInSale[i].discount %>% OFF</span>
+									<% } else {%>
+										<h2>$<%= toThousand(productInSale[i].price) %></h2>
+									<% } %>
+								<i class="fas fa-truck"></i>
+								<p><%= productInSale[i].name %></p>
+							</article>
+						</a>
+					</section>
+				<% } %>
+			</div>
+		</div>
+	</div>
+	<!-- /ultima visita -->
+
+	<!-- Ofertas -->
+	<div class="container products-wrapper">
+		<div class="row">
+			<div class="col-12">
+				<h2 class="products-title">Ofertas</h2>
+			</div>
+			<!-- Show the "in-sale" products -->
+			<div class="col-12 col-sm-6 col-lg-3">
+				<% for( let i = 0; i < productVisited.length; i++ ) { %>
+					<section class="product-box">
+						<a href="/products/detail/<%= productVisited.id %>">
+							<figure class="product-box_image">
+								<img src="/images/products/<%= productVisited[i].image %>" alt="imagen de producto">
+							</figure>
+							<article class="product-box_data">
+								<% if (productVisited[i].discount>0) { %>
+									<h2>$<%= finalPrice(productVisited[i].price, productVisited[i].discount) %></h2>
+									<span><%= productVisited[i].discount %>% OFF</span>
+								<% } else { %>
+									<h2>$<%= toThousand(productVisited[i].price) %></h2>
+								<% } %>
+								<p><%= productVisited[i].name %></p>
+								<i class="fas fa-truck"></i>
+							</article>
+						</a>
+					</section>
+				<% } %>
+			</div>
+		</div>
+	</div>
+	<!-- /Ofertas -->
+
+	<!-- footer -->
+	<%- include('partials/footer') %>
+	<!-- /footer -->
+</body>	
+</html>
